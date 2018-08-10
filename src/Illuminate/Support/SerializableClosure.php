@@ -1,6 +1,6 @@
 <?php namespace Illuminate\Support;
 
-use Jeremeamia\SuperClosure\SerializableClosure as SuperClosure;
+use SuperClosure\SerializableClosure as SuperClosure;
 
 /**
  * Extends SuperClosure for backwards compatibility.
@@ -12,7 +12,7 @@ class SerializableClosure extends SuperClosure {
 	 *
 	 * @var string
 	 */
-	protected $code;
+	protected $unserialized;
 
 	/**
 	 * The variables that were "used" or imported from the parent scope
@@ -30,7 +30,7 @@ class SerializableClosure extends SuperClosure {
 	{
 		$this->determineCodeAndVariables();
 
-		return $this->code;
+		return $this->unserialized['code'];
 	}
 
 	/**
@@ -42,7 +42,7 @@ class SerializableClosure extends SuperClosure {
 	{
 		$this->determineCodeAndVariables();
 
-		return $this->variables;
+		return $this->unserialized['context'];
 	}
 
 	/**
@@ -50,9 +50,9 @@ class SerializableClosure extends SuperClosure {
 	 */
 	protected function determineCodeAndVariables()
 	{
-		if ( ! $this->code)
+		if ( ! $this->unserialized)
 		{
-			list($this->code, $this->variables) = unserialize($this->serialize());
+			$this->unserialized = unserialize($this->serialize());
 		}
 	}
 
