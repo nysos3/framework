@@ -1,9 +1,10 @@
 <?php namespace Illuminate\Foundation\Console;
 
+use ClassPreloader\Exceptions\VisitorExceptionInterface;
+use ClassPreloader\Factory;
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Composer;
 use Illuminate\View\Engines\CompilerEngine;
-use ClassPreloader\Command\PreCompileCommand;
 use Symfony\Component\Console\Input\InputOption;
 
 class OptimizeCommand extends Command {
@@ -81,42 +82,37 @@ class OptimizeCommand extends Command {
 	 *
 	 * @return void
 	 */
-	protected function compileClasses()
-	{
-		$this->registerClassPreloaderCommand();
+    protected function compileClasses()
+    {
+        $outputPath = $this->laravel['path.base'].'/bootstrap/compiled.php';
 
-		$outputPath = $this->laravel['path.base'].'/bootstrap/compiled.php';
+        $preloader = (new Factory)->create(['skip' => true]);
+        $handle = $preloader->prepareOutput($outputPath);
+        foreach ($this->getClassFiles() as $file) {
+            try {
+                fwrite($handle, $preloader->getCode($file, false)."\n");
+            } catch (VisitorExceptionInterface $e) {
+                //
+            }
+        }
+        fclose($handle);
+    }
 
-		$this->callSilent('compile', array(
-			'--config' => implode(',', $this->getClassFiles()),
-			'--output' => $outputPath,
-			'--strip_comments' => 1,
-		));
-	}
+    /**
+     * Get the classes that should be combined and compiled.
+     *
+     * @return array
+     */
+    protected function getClassFiles()
+    {
+        $app = $this->laravel;
 
-	/**
-	 * Get the classes that should be combined and compiled.
-	 *
-	 * @return array
-	 */
-	protected function getClassFiles()
-	{
-		$app = $this->laravel;
+        $core = require __DIR__.'/Optimize/config.php';
 
-		$core = require __DIR__.'/Optimize/config.php';
+        $files = array_merge($core, $this->laravel['config']['compile']);
 
-		return array_merge($core, $this->laravel['config']['compile']);
-	}
-
-	/**
-	 * Register the pre-compiler command instance with Artisan.
-	 *
-	 * @return void
-	 */
-	protected function registerClassPreloaderCommand()
-	{
-		$this->getApplication()->add(new PreCompileCommand);
-	}
+        return array_filter($files, function ($item) {return $item;});
+    }
 
 	/**
 	 * Compile all view files.
