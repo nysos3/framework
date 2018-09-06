@@ -655,7 +655,7 @@ class Application extends Container implements HttpKernelInterface, TerminableIn
 		$sessionReject = $this->bound('session.reject') ? $this['session.reject'] : null;
 
 		$client = (new Builder)
-                    ->push('Illuminate\Cookie\Guard', $this['encrypter'])
+                    ->push('Illuminate\Cookie\Guard', $this['encrypter'], $this['config'])
                     ->push('Illuminate\Cookie\Queue', $this['cookie'])
                     ->push('Illuminate\Session\Middleware', $this['session'], $sessionReject);
 
