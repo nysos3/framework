@@ -148,7 +148,7 @@ class Guard implements HttpKernelInterface {
 
     /**
      * Determine if this cookie should be encrypted
-     * @param Cookie $c
+     * @param $key
      * @return bool
      */
     protected function shouldBeEncrypted($key)
