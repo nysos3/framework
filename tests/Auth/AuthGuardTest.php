@@ -201,12 +201,13 @@ class AuthGuardTest extends TestCase {
 		$guard = new Illuminate\Auth\Guard($provider, $session, $request);
 		$guard->setCookieJar($cookie);
 		$foreverCookie = new Symfony\Component\HttpFoundation\Cookie($guard->getRecallerName(), 'foo');
-		$cookie->shouldReceive('forever')->once()->with($guard->getRecallerName(), 'foo|recaller')->andReturn($foreverCookie);
+		$cookie->shouldReceive('forever')->once()->with($guard->getRecallerName(), 'foo|recaller|bar')->andReturn($foreverCookie);
 		$cookie->shouldReceive('queue')->once()->with($foreverCookie);
 		$guard->getSession()->shouldReceive('put')->once()->with($guard->getName(), 'foo');
 		$session->shouldReceive('migrate')->once();
 		$user = m::mock('Illuminate\Auth\UserInterface');
 		$user->shouldReceive('getAuthIdentifier')->andReturn('foo');
+		$user->shouldReceive('getAuthPassword')->andReturn('bar');
 		$user->shouldReceive('getRememberToken')->andReturn('recaller');
 		$user->shouldReceive('setRememberToken')->never();
 		$provider->shouldReceive('updateRememberToken')->never();
@@ -226,7 +227,8 @@ class AuthGuardTest extends TestCase {
 		$session->shouldReceive('migrate')->once();
 		$user = m::mock('Illuminate\Auth\UserInterface');
 		$user->shouldReceive('getAuthIdentifier')->andReturn('foo');
-		$user->shouldReceive('getRememberToken')->andReturn(null);
+        $user->shouldReceive('getAuthPassword')->andReturn('bar');
+        $user->shouldReceive('getRememberToken')->andReturn(null);
 		$user->shouldReceive('setRememberToken')->once();
 		$provider->shouldReceive('updateRememberToken')->once();
 		$guard->login($user, true);

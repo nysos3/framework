@@ -2,6 +2,7 @@
 
 use Illuminate\Cookie\CookieJar;
 use Illuminate\Events\Dispatcher;
+use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Request;
 use Illuminate\Session\Store as SessionStore;
 use Symfony\Component\HttpFoundation\Response;
@@ -188,7 +189,7 @@ class Guard {
 		{
 			$this->tokenRetrievalAttempted = true;
 
-			list($id, $token) = explode('|', $recaller, 2);
+            list($id, $token) = explode('|', $recaller, 3);
 
 			$this->viaRemember = ! is_null($user = $this->provider->retrieveByToken($id, $token));
 
@@ -231,7 +232,7 @@ class Guard {
 
 		$segments = explode('|', $recaller);
 
-		return count($segments) == 2 && trim($segments[0]) !== '' && trim($segments[1]) !== '';
+        return count($segments) == 3 && trim($segments[0]) !== '' && trim($segments[1]) !== '' && trim($segments[2]) !== '';
 	}
 
 	/**
@@ -492,9 +493,9 @@ class Guard {
 	 */
 	protected function queueRecallerCookie(UserInterface $user)
 	{
-		$value = $user->getAuthIdentifier().'|'.$user->getRememberToken();
-
-		$this->getCookieJar()->queue($this->createRecaller($value));
+        $this->getCookieJar()->queue($this->createRecaller(
+            $user->getAuthIdentifier().'|'.$user->getRememberToken().'|'.$user->getAuthPassword()
+        ));
 	}
 
 	/**
@@ -539,6 +540,27 @@ class Guard {
 
 		$this->loggedOut = true;
 	}
+
+    /**
+     * Invalidate other sessions for the current user.
+     *
+     * The application must be using the AuthenticateSession middleware.
+     *
+     * @param  string  $password
+     * @param  string  $attribute
+     * @return bool|null
+     */
+	public function logoutOtherDevices($password, $attribute = 'password')
+    {
+        if (! $this->user()) {
+            return;
+        }
+
+        $this->user()->{$attribute} = Hash::make($password);
+        $result = $this->user->save();
+        $this->queueRecallerCookie($this->user());
+        return $result;
+    }
 
 	/**
 	 * Remove the user data from the session and cookies.
