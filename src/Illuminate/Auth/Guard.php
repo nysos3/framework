@@ -2,6 +2,7 @@
 
 use Illuminate\Cookie\CookieJar;
 use Illuminate\Events\Dispatcher;
+use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Request;
 use Illuminate\Session\Store as SessionStore;
 use Symfony\Component\HttpFoundation\Response;
@@ -555,9 +556,7 @@ class Guard {
             return;
         }
 
-        $this->user()->forceFill([
-            $attribute => Hash::make($password),
-        ]);
+        $this->user()->{$attribute} = Hash::make($password);
         $result = $this->user->save();
         $this->queueRecallerCookie($this->user());
         return $result;
