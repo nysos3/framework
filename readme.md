@@ -1,10 +1,48 @@
-## Laravel Framework (Kernel)
+Laravel 4.2 Framework - Unofficial LTS
+===
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
+[![Build Status](https://travis-ci.org/NeverBounce/framework.svg?branch=4.2)](https://travis-ci.org/NeverBounce/framework)
 [![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+
+> **Note:** This repository is an unofficial fork of the Laravel 4.2 Framework. The maintainers of this repository are not affiliated with the Laravel project.
+
+Without a clear upgrade path to Laravel 5.x, older 4.2 applications can be difficult to modernize without a complete rewrite. This fork is intended to breath some new life into these applications when a rewrite isn't possible.
+
+## Installation
+
+This fork is only available as an [artifact](https://getcomposer.org/doc/05-repositories.md#artifact) and is not available on Packagist.
+
+1. To get started first download the latest release from the [release page](https://github.com/NeverBounce/framework/releases). 
+2. Create a new directory called `artifacts` in the same location as your composer.json file. 
+3. Place the zip file downloaded from the release page into this new folder.
+4. Add the following entry in your `composer.json` file:
+
+    ```json
+    "repositories": [
+        {
+          "type": "artifact",
+          "url": "./artifacts"
+        }
+      ],
+    ```
+ 
+5. Add `"laravel/framework": "^4.2"` to your `composer.json` dependencies if it's not already there. 
+6. Run `composer update` to update the framework.
+
+## Changes
+
+This project does not follow Semantic Versioning. Refer to the changes below to see what's changed.
+
+- PHP 7.x `Throwable` and exception handling updates
+- Dropped support for PHP `5.x`
+- Updated Whoops to `^2.1`
+- Updated PHPUnit to `^6.1` **(Breaking change)**
+- Updated other dependencies to most recent versions
+- Added support for plaintext cookies (Laravel 5.x feature)
+- Added `Auth::logoutOtherDevices()` (Laravel 5.x feature)
+
+Original Readme:
+===
 
 > **Note:** This repository contains the core code of the Laravel framework. If you want to build an application using Laravel 4, visit the main [Laravel repository](https://github.com/laravel/laravel).
 
