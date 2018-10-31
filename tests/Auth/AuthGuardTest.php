@@ -251,7 +251,7 @@ class AuthGuardTest extends TestCase {
 	{
 		$guard = $this->getGuard();
 		list($session, $provider, $request, $cookie) = $this->getMocks();
-		$request = Symfony\Component\HttpFoundation\Request::create('/', 'GET', array(), array($guard->getRecallerName() => 'id|recaller'));
+		$request = Symfony\Component\HttpFoundation\Request::create('/', 'GET', array(), array($guard->getRecallerName() => 'id|recaller|password'));
 		$guard = new Illuminate\Auth\Guard($provider, $session, $request);
 		$guard->getSession()->shouldReceive('get')->once()->with($guard->getName())->andReturn(null);
 		$user = m::mock('Illuminate\Auth\UserInterface');
