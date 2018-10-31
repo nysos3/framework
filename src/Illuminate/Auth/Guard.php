@@ -188,7 +188,7 @@ class Guard {
 		{
 			$this->tokenRetrievalAttempted = true;
 
-			list($id, $token) = explode('|', $recaller, 2);
+            list($id, $token) = explode('|', $recaller, 3);
 
 			$this->viaRemember = ! is_null($user = $this->provider->retrieveByToken($id, $token));
 
@@ -231,7 +231,7 @@ class Guard {
 
 		$segments = explode('|', $recaller);
 
-		return count($segments) == 2 && trim($segments[0]) !== '' && trim($segments[1]) !== '';
+        return count($segments) == 3 && trim($segments[0]) !== '' && trim($segments[1]) !== '' && trim($segments[2]) !== '';
 	}
 
 	/**
