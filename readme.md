@@ -40,6 +40,8 @@ This project does not follow Semantic Versioning. Refer to the changes below to 
 - Updated other dependencies to most recent versions
 - Added support for plaintext cookies (Laravel 5.x feature)
 - Added `Auth::logoutOtherDevices()` (Laravel 5.x feature)
+- Removed Mcrypt requirement, Encryptor now uses OpenSSL (Laravel 5.x compatibility)
+- Added support for PHP 7.1+
 
 Original Readme:
 ===
