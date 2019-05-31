@@ -42,6 +42,7 @@ This project does not follow Semantic Versioning. Refer to the changes below to 
 - Added `Auth::logoutOtherDevices()` (Laravel 5.x feature)
 - Removed Mcrypt requirement, Encryptor now uses OpenSSL (Laravel 5.x compatibility)
 - Added support for PHP 7.1+
+- Upgraded Symfony components to `2.8.*`
 
 Original Readme:
 ===
