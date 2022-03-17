@@ -463,12 +463,6 @@ class Connection implements ConnectionInterface {
 		// If we catch an exception, we will roll back so nothing gets messed
 		// up in the database. Then we'll re-throw the exception so it can
 		// be handled how the developer sees fit for their applications.
-		catch (\Exception $e)
-		{
-			$this->rollBack();
-
-			throw $e;
-		}
 		catch (\Throwable $e)
 		{
 			$this->rollBack();
@@ -626,7 +620,7 @@ class Connection implements ConnectionInterface {
 		// If an exception occurs when attempting to run a query, we'll format the error
 		// message to include the bindings with SQL, which will make this exception a
 		// lot more helpful to the developer instead of just the database's errors.
-		catch (\Exception $e)
+		catch (\Throwable $e)
 		{
 			throw new QueryException(
 				$query, $this->prepareBindings($bindings), $e

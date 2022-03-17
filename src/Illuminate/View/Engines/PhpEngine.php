@@ -36,10 +36,6 @@ class PhpEngine implements EngineInterface {
 		{
 			include $__path;
 		}
-		catch (\Exception $e)
-		{
-			$this->handleViewException($e, $obLevel);
-		}
 		catch (\Throwable $e)
 		{
 			$this->handleViewException($e, $obLevel);
@@ -51,7 +47,7 @@ class PhpEngine implements EngineInterface {
 	/**
 	 * Handle a view exception.
 	 *
-	 * @param  \Exception  $e
+	 * @param  \Throwable  $e
 	 * @param  int  $obLevel
 	 * @return void
 	 *

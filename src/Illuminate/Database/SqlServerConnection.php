@@ -38,12 +38,6 @@ class SqlServerConnection extends Connection {
 		// If we catch an exception, we will roll back so nothing gets messed
 		// up in the database. Then we'll re-throw the exception so it can
 		// be handled how the developer sees fit for their applications.
-		catch (\Exception $e)
-		{
-			$this->pdo->exec('ROLLBACK TRAN');
-
-			throw $e;
-		}
 		catch (\Throwable $e)
 		{
 			$this->pdo->exec('ROLLBACK TRAN');

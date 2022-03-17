@@ -75,7 +75,7 @@ class SubscribeCommand extends Command {
 		{
 			return $this->getQueue()->push_type;
 		}
-		catch (\Exception $e)
+		catch (\Throwable $e)
 		{
 			return 'multicast';
 		}
@@ -106,7 +106,7 @@ class SubscribeCommand extends Command {
 		{
 			return $this->getQueue()->subscribers;
 		}
-		catch (\Exception $e)
+		catch (\Throwable $e)
 		{
 			return array();
 		}

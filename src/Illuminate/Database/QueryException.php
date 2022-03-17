@@ -23,7 +23,7 @@ class QueryException extends PDOException {
 	 *
 	 * @param  string  $sql
 	 * @param  array  $bindings
-	 * @param  \Exception $previous
+	 * @param  \Throwable $previous
 	 * @return void
 	 */
 	public function __construct($sql, array $bindings, $previous)
@@ -47,7 +47,7 @@ class QueryException extends PDOException {
 	 *
 	 * @param  string  $sql
 	 * @param  array  $bindings
-	 * @param  \Exception $previous
+	 * @param  \Throwable $previous
 	 * @return string
 	 */
 	protected function formatMessage($sql, $bindings, $previous)

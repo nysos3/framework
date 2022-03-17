@@ -85,7 +85,7 @@ class View implements ArrayAccess, Renderable
             $this->factory->flushSectionsIfDoneRendering();
 
             return $response ?: $contents;
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             $this->factory->flushSections();
 
             throw $e;

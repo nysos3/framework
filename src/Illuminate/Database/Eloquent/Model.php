@@ -1093,7 +1093,7 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
 	 * Delete the model from the database.
 	 *
 	 * @return bool|null
-	 * @throws \Exception
+	 * @throws \Throwable
 	 */
 	public function delete()
 	{

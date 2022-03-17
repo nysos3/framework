@@ -103,7 +103,7 @@ class DatabaseStore implements StoreInterface {
 		{
 			$this->table()->insert(compact('key', 'value', 'expiration'));
 		}
-		catch (\Exception $e)
+		catch (\Throwable $e)
 		{
 			$this->table()->where('key', '=', $key)->update(compact('value', 'expiration'));
 		}

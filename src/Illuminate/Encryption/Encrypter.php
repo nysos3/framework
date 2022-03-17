@@ -56,7 +56,7 @@ class Encrypter {
      *
      * @param  string $cipher
      * @return string
-     * @throws \Exception
+     * @throws \Throwable
      */
     public static function generateKey($cipher)
     {
@@ -71,7 +71,7 @@ class Encrypter {
      * @return string
      *
      * @throws \Illuminate\Contracts\Encryption\EncryptException
-     * @throws \Exception
+     * @throws \Throwable
      */
     public function encrypt($value, $serialize = true)
     {
@@ -102,7 +102,7 @@ class Encrypter {
      *
      * @param  string $value
      * @return string
-     * @throws \Exception
+     * @throws \Throwable
      */
     public function encryptString($value)
     {
@@ -117,7 +117,7 @@ class Encrypter {
      * @return mixed
      *
      * @throws \Illuminate\Contracts\Encryption\DecryptException
-     * @throws \Exception
+     * @throws \Throwable
      */
     public function decrypt($payload, $unserialize = true)
     {
@@ -165,7 +165,7 @@ class Encrypter {
      * @return array
      *
      * @throws \Illuminate\Contracts\Encryption\DecryptException
-     * @throws \Exception
+     * @throws \Throwable
      */
     protected function getJsonPayload($payload)
     {
@@ -198,7 +198,7 @@ class Encrypter {
      *
      * @param  array $payload
      * @return bool
-     * @throws \Exception
+     * @throws \Throwable
      */
     protected function validMac(array $payload)
     {

@@ -176,7 +176,7 @@ class DatabaseConnectionTest extends TestCase {
 		{
 			$mock->transaction(function() { throw new Exception('foo'); });
 		}
-		catch (Exception $e)
+		catch (\Throwable $e)
 		{
 			$this->assertEquals('foo', $e->getMessage());
 		}

@@ -1420,7 +1420,7 @@ class Validator implements MessageProviderInterface {
 		{
 			return new DateTime($value);
 		}
-		catch (\Exception $e)
+		catch (\Throwable $e)
 		{
 			return null;
 		}
@@ -1439,7 +1439,7 @@ class Validator implements MessageProviderInterface {
 		{
 			new DateTimeZone($value);
 		}
-		catch (\Exception $e)
+		catch (\Throwable $e)
 		{
 			return false;
 		}

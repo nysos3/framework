@@ -46,7 +46,7 @@ class ServeCommand extends Command {
 	 *
 	 * @return void
 	 *
-	 * @throws \Exception
+	 * @throws \Throwable
 	 */
 	protected function checkPhpVersion()
 	{

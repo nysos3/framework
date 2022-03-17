@@ -110,10 +110,6 @@ class Worker {
 		{
 			$this->pop($connectionName, $queue, $delay, $sleep, $maxTries);
 		}
-		catch (\Exception $e)
-		{
-			if ($this->exceptions) $this->exceptions->handleException($e);
-		}
 		catch (\Throwable $e)
 		{
 			if ($this->exceptions) $this->exceptions->handleException($e);
@@ -192,7 +188,7 @@ class Worker {
 	 * @param  int  $delay
 	 * @return void
 	 *
-	 * @throws \Exception
+	 * @throws \Throwable
 	 */
 	public function process($connection, Job $job, $maxTries = 0, $delay = 0)
 	{
@@ -213,17 +209,11 @@ class Worker {
 			return ['job' => $job, 'failed' => false];
 		}
 
-		catch (\Exception $e)
+		catch (\Throwable $e)
 		{
 			// If we catch an exception, we will attempt to release the job back onto
 			// the queue so it is not lost. This will let is be retried at a later
 			// time by another listener (or the same one). We will do that here.
-			if ( ! $job->isDeleted()) $job->release($delay);
-
-			throw $e;
-		}
-		catch (\Throwable $e)
-		{
 			if ( ! $job->isDeleted()) $job->release($delay);
 
 			throw $e;

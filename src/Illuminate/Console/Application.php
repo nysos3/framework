@@ -184,7 +184,7 @@ class Application extends \Symfony\Component\Console\Application {
 	/**
 	 * Render the given exception.
 	 *
-	 * @param  \Exception  $e
+	 * @param  \Throwable  $e
 	 * @param  \Symfony\Component\Console\Output\OutputInterface  $output
 	 * @return void
 	 */

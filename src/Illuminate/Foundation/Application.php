@@ -732,7 +732,7 @@ class Application extends Container implements HttpKernelInterface, TerminableIn
 	 * @param  bool  $catch
 	 * @return \Symfony\Component\HttpFoundation\Response
 	 *
-	 * @throws \Exception
+	 * @throws \Throwable
 	 */
 	public function handle(SymfonyRequest $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
 	{
@@ -743,12 +743,6 @@ class Application extends Container implements HttpKernelInterface, TerminableIn
 			$this->boot();
 
 			return $this->dispatch($request);
-		}
-		catch (\Exception $e)
-		{
-			if ( ! $catch || $this->runningUnitTests()) throw $e;
-
-			return $this['exception']->handleException($e);
 		}
 		catch (\Throwable $e)
 		{

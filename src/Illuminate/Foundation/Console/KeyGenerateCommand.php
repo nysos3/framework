@@ -51,7 +51,7 @@ class KeyGenerateCommand extends Command {
      * Generate a random key for the application.
      *
      * @return string
-     * @throws \Exception
+     * @throws \Throwable
      */
 	protected function generateRandomKey()
 	{
